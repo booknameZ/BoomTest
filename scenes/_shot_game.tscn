@@ -1,0 +1,15 @@
+[gd_scene load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://scenes/_shot_helper.gd" id="1"]
+
+[node name="ShotHelper" type="Node"]
+script = ExtResource("1")
+start_frame = 5
+slot_frame = -1
+shots = {
+25: "game_collapsed.png",
+55: "game_charging.png",
+80: "game_arena.png",
+90: "game_slot.png"
+}
+cursor_pos = Vector2(640, 360)

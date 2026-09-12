@@ -1,0 +1,50 @@
+[gd_scene load_steps=8 format=3]
+
+[ext_resource type="Script" path="res://scripts/main.gd" id="1_main"]
+[ext_resource type="Script" path="res://scripts/fx.gd" id="2_fx"]
+[ext_resource type="Script" path="res://scripts/hud.gd" id="3_hud"]
+[ext_resource type="Script" path="res://scripts/celebrate.gd" id="4_celebrate"]
+[ext_resource type="Shader" path="res://shaders/pixel_horror.gdshader" id="5_shader"]
+[ext_resource type="Script" path="res://scripts/menu.gd" id="6_menu"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_post"]
+shader = ExtResource("5_shader")
+
+[node name="Main" type="Node3D"]
+script = ExtResource("1_main")
+
+[node name="Camera3D" type="Camera3D" parent="."]
+fov = 55.0
+near = 1.0
+far = 2000.0
+
+[node name="Ores" type="Node3D" parent="."]
+
+[node name="Gems" type="Node3D" parent="."]
+
+[node name="FX" type="Node3D" parent="."]
+script = ExtResource("2_fx")
+
+[node name="HUD" type="CanvasLayer" parent="."]
+layer = 30
+script = ExtResource("3_hud")
+
+[node name="Celebrate" type="CanvasLayer" parent="."]
+layer = 30
+script = ExtResource("4_celebrate")
+
+[node name="Menu" type="CanvasLayer" parent="."]
+layer = 30
+script = ExtResource("6_menu")
+
+[node name="Post" type="CanvasLayer" parent="."]
+layer = 20
+
+[node name="PostRect" type="ColorRect" parent="Post"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+material = SubResource("ShaderMaterial_post")

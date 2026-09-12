@@ -1,0 +1,8 @@
+[gd_scene load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://scenes/_launcher.gd" id="1"]
+
+[node name="Launcher" type="Node"]
+script = ExtResource("1")
+slot_frame = 20
+end_frame = 46

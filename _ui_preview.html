@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>BoomOre — Landscape UI Layout Mock (1280x720)</title>
+<style>
+  * { margin:0; padding:0; box-sizing:border-box; }
+  html,body{ height:100%; background:#000; display:flex; align-items:center; justify-content:center;
+    font-family:"Courier New",monospace; color:#ffd27a; }
+  #stage{ position:relative; width:1280px; height:720px; background:#0a0706;
+    border:2px solid #3a2a14; image-rendering:pixelated; transform-origin:center center; }
+  .panel{ position:absolute; background:rgba(10,6,3,0.82); border:1.5px solid #c8902f; border-radius:8px; }
+  .frame{ position:absolute; background:transparent; border:1.5px solid #9a6a28; border-radius:10px; }
+  .cap{ position:absolute; text-align:center; font-weight:bold; color:#ffd27a;
+    text-shadow:0 0 4px #000, 2px 2px 0 #000; letter-spacing:2px; }
+  /* top bar */
+  #topbar{ position:absolute; left:0; top:0; width:1280px; height:62px;
+    background:rgba(13,9,5,0.9); border-bottom:1px solid #60481f; }
+  #pause{ position:absolute; left:8px; top:10px; width:40px; height:40px; line-height:40px;
+    text-align:center; background:#190e07; border:1px solid #d0a050; border-radius:6px; color:#ffd27a; font-size:16px;}
+  .heart{ position:absolute; top:14px; width:24px; height:22px; background:#ff3a3a;
+    clip-path:polygon(50% 100%,0 35%,15% 5%,50% 25%,85% 5%,100% 35%); box-shadow:0 0 6px #ff3a3a; }
+  .badge{ position:absolute; top:10px; height:40px; line-height:40px; text-align:center;
+    background:#190e07; border:1.5px solid #d0a050; border-radius:10px; color:#ffd27a; font-size:14px; }
+  #lvl{ left:553px; width:148px; }
+  #score{ right:10px; width:122px; }
+  #goal{ position:absolute; right:10px; top:52px; width:122px; text-align:center; font-size:10px; color:#a8c8ff; }
+  /* ore grid (middle) */
+  .ore{ position:absolute; width:34px; height:34px; transform:rotate(45deg);
+    border-radius:4px; box-shadow:0 0 8px currentColor; }
+  .ball{ position:absolute; width:26px; height:26px; border-radius:50%;
+    background:#4060a0; box-shadow:0 0 12px #6a90e0; }
+  .funnel{ position:absolute; height:0; border-left:2px solid #c09030; }
+  .gem{ position:absolute; width:14px; height:14px; transform:rotate(45deg); border-radius:3px;
+    box-shadow:0 0 6px currentColor; }
+  .float{ position:absolute; font-weight:bold; text-shadow:2px 2px 0 #000,-1px -1px 0 #000; white-space:nowrap; }
+  #poollabel{ position:absolute; left:50%; transform:translateX(-50%); width:340px; text-align:center;
+    background:rgba(10,6,3,0.0); color:#ffd27a; font-size:12px; text-shadow:2px 2px 0 #000; }
+  .muted{ color:#8a7a5a; font-size:11px; }
+</style>
+</head>
+<body>
+<div id="stage">
+  <!-- TOP BAR -->
+  <div id="topbar"></div>
+  <div id="pause">II</div>
+  <div class="heart" style="left:56px"></div>
+  <div class="heart" style="left:84px"></div>
+  <div class="heart" style="left:112px"></div>
+  <div id="lvl" class="badge">LV 1</div>
+  <div id="score" class="badge">0 / 120</div>
+  <div id="goal">GOAL 120</div>
+
+  <!-- LEFT PANEL: CHARGE -->
+  <div class="panel" style="left:14px;top:70px;width:236px;height:638px;"></div>
+  <div class="cap" style="left:14px;top:78px;width:236px;font-size:14px;">CHARGE</div>
+  <div style="position:absolute;left:110px;top:130px;width:44px;height:440px;background:#0d0805;border:1.5px solid #d0a050;border-radius:6px;">
+    <div style="position:absolute;left:4px;right:4px;bottom:0;height:62%;background:linear-gradient(#ffcc00,#44dd66);border-radius:0 0 4px 4px;"></div>
+  </div>
+
+  <!-- MIDDLE FRAME: ARENA -->
+  <div class="frame" style="left:258px;top:68px;width:764px;height:642px;"></div>
+  <div class="cap" style="left:258px;top:76px;width:764px;font-size:14px;">ARENA</div>
+
+  <!-- right panel: COMBO + MULT -->
+  <div class="panel" style="left:1030px;top:70px;width:236px;height:638px;"></div>
+  <div class="cap" style="left:1030px;top:78px;width:236px;font-size:14px;">COMBO</div>
+  <div class="float" style="left:1030px;top:330px;width:236px;text-align:center;color:#ffcc00;font-size:16px;">x7 COMBO!</div>
+  <div class="float" style="left:1030px;top:380px;width:236px;text-align:center;color:#ffffff;font-size:22px;">x1.0</div>
+
+  <!-- pool label bottom center -->
+  <div id="poollabel" style="top:658px;">ORE POOL 47%</div>
+
+  <!-- MIDDLE CONTENT: ore grid + ball + funnel + pool + float text -->
+  <div id="arena-content"></div>
+  <div class="float" id="boom" style="left:560px;top:300px;color:#ff2200;font-size:22px;">BOOM!</div>
+  <div class="float" style="left:470px;top:250px;color:#ffd27a;font-size:16px;">+5</div>
+  <div class="float" style="left:640px;top:340px;color:#ffcc00;font-size:20px;">x3 CHAIN!</div>
+  <div class="float" style="left:540px;top:470px;color:#3ac060;font-size:18px;">SAFE BALL!</div>
+</div>
+
+<script>
+  // build a small ore grid inside the arena frame to convey the combat area
+  const ac = document.getElementById('arena-content');
+  const colors = ['#d86a3a','#d8b050','#c85a8a','#5aa0d8','#6ac85a'];
+  // grid rows/cols roughly like the game (9 cols)
+  const cols = 9, rows = 5, ox = 360, oy = 150, dx = 52, dy = 58;
+  let seed = 7;
+  function rnd(){ seed = (seed*9301+49297)%233280; return seed/233280; }
+  for (let r=0; r<rows; r++){
+    for (let c=0; c<cols; c++){
+      if (rnd() < 0.26) continue;
+      const skip = (rnd()<0.4);
+      const d = document.createElement('div');
+      d.className = 'ore';
+      const col = colors[Math.floor(rnd()*colors.length)];
+      d.style.left = (ox + c*dx + (rnd()*6-3)) + 'px';
+      d.style.top  = (oy + r*dy + (rnd()*6-3)) + 'px';
+      d.style.color = col;
+      d.style.background = col;
+      d.style.opacity = skip ? '0.5' : '0.95';
+      ac.appendChild(d);
+    }
+  }
+  // ball
+  const b = document.createElement('div'); b.className='ball'; b.style.left='620px'; b.style.top='120px'; ac.appendChild(b);
+  // V funnel (two angled lines) near bottom
+  const f1 = document.createElement('div'); f1.className='funnel';
+  f1.style.left='300px'; f1.style.top='520px'; f1.style.width='200px';
+  f1.style.transform='rotate(28deg)'; f1.style.borderLeft='2px solid #ffb43a'; f1.style.boxShadow='0 0 8px #ffb43a'; ac.appendChild(f1);
+  const f2 = document.createElement('div'); f2.className='funnel';
+  f2.style.left='780px'; f2.style.top='520px'; f2.style.width='200px';
+  f2.style.transform='rotate(-28deg)'; f2.style.borderLeft='2px solid #ffb43a'; f2.style.boxShadow='0 0 8px #ffb43a'; ac.appendChild(f2);
+  // pool of gems at bottom
+  const poolCols = 24;
+  for (let i=0;i<poolCols;i++){
+    for (let k=0;k<2;k++){
+      if (rnd()<0.3) continue;
+      const g = document.createElement('div'); g.className='gem';
+      const col = colors[Math.floor(rnd()*colors.length)];
+      g.style.left = (320 + i*22 + (rnd()*4-2)) + 'px';
+      g.style.top  = (600 - k*12 + (rnd()*3-1.5)) + 'px';
+      g.style.color = col; g.style.background = col; ac.appendChild(g);
+    }
+  }
+</script>
+</body>
+</html>

@@ -1,0 +1,19 @@
+# ===== Godot editor cache (auto-regenerated on open) =====
+.godot/
+
+# ===== Build / export artifacts =====
+*.apk
+*.aab
+*.idsig
+*.exe
+*.pck
+
+# ===== Godot 3-style generated import metadata (Godot 4 regenerates these) =====
+*.import
+
+# ===== AI tooling data (not part of the game source) =====
+.workbuddy/
+
+# ===== OS / editor cruft =====
+.DS_Store
+Thumbs.db
