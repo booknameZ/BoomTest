@@ -33,7 +33,7 @@ Godot 4.7 工程「MineRoulette」（一颗就炸）的协作源码仓库。
 
 ### 维护者（本机）：自动下载
 
-维护者本机已配置**定时自动 pull**（每 30 分钟检查一次远程更新），成员 push 后改动会自动落回 `D:\BoomCraft\MineRoulette`。
+维护者本机已配置**定时自动 pull**（每小时检查一次远程更新），成员 push 后改动会自动落回 `D:\BoomCraft\MineRoulette`。
 
 如需立即手动同步，在本机仓库目录运行：
 
@@ -41,8 +41,9 @@ Godot 4.7 工程「MineRoulette」（一颗就炸）的协作源码仓库。
 git pull
 ```
 
-## 安全建议
+## 可见性与安全
 
-- 仓库建议设为 **Private**（团队源码不外泄）。若设为 Private，自动 pull 也需要 PAT，请告知维护者一并配置。
+- 仓库已设为 **Public**：自动 pull 走匿名只读，维护者本机定时任务无需任何凭据即可同步成员改动；成员 push 仍需各自的 Personal Access Token。
+- 若将来改回 **Private**：自动 pull 需配置一个 `booknameZ/BoomTest` 的只读 PAT（两边同属 `booknameZ` 账户，用同一账户凭据即可），并告知维护者更新自动化任务。
 - 提交信息尽量写清楚改动内容，便于回溯与合并。
 - `export_presets.cfg` 中的 Android debug keystore 已留空，Godot 使用默认调试密钥，不涉及私钥泄露。
